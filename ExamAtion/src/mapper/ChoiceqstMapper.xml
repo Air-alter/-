@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="dao.IChoiceqstDAO">
+	<!--当数据库中字段名与实体类中属性名不一致时，需要显示定义字段映射  -->
+	<resultMap id="choiceqstResultMap" type="vo.Choiceqst">
+		<id property="ChoiceQst_id" column="ChoiceQst_id" />
+		<result property="ChoiceQst_Info" column="ChoiceQst_Info" />
+		<result property="ChoiceQst_OPA" column="ChoiceQst_OPA" />
+		<result property="ChoiceQst_OPB" column="ChoiceQst_OPB" />
+		<result property="ChoiceQst_OPC" column="ChoiceQst_OPC" />
+		<result property="ChoiceQst_OPD" column="ChoiceQst_OPD" />
+		<result property="ChoiceQst_answ" column="ChoiceQst_answ" />
+	</resultMap>
+
+	<sql id="choiceqstColumns"> 
+		ChoiceQst_id,ChoiceQst_Info,ChoiceQst_OPA,ChoiceQst_OPB,ChoiceQst_OPC,ChoiceQst_OPD,ChoiceQst_answ
+	</sql>
+
+	<select id="getById" parameterType="String" resultMap="choiceqstResultMap">
+		select
+		<include refid="choiceqstColumns"></include>
+		from choiceqst 
+		where ChoiceQst_id=#{topic_id}
+	</select>
+	
+	<insert id="insert" parameterType="vo.Choiceqst">
+		insert into choiceqst(<include refid="choiceqstColumns"></include>)
+		values(#{ChoiceQst_id},#{ChoiceQst_Info},#{ChoiceQst_OPA},#{ChoiceQst_OPB},#{ChoiceQst_OPC},#{ChoiceQst_OPD},#{ChoiceQst_answ})
+	</insert>
+	
+	<update id="update" parameterType="vo.Choiceqst">
+		update choiceqst
+		<set>
+			<if test="ChoiceQst_id!=null">
+				 ChoiceQst_id = #{ChoiceQst_id},
+			</if>
+			<if test="ChoiceQst_Info!=null">
+				 ChoiceQst_Info = #{ChoiceQst_Info},
+			</if>
+			<if test="ChoiceQst_OPA!=null">
+				 ChoiceQst_OPA = #{ChoiceQst_OPA},
+			</if>
+			<if test="ChoiceQst_OPB!=null">
+				 ChoiceQst_OPB = #{ChoiceQst_OPB},
+			</if>
+			<if test="ChoiceQst_OPC!=null">
+				 ChoiceQst_OPC = #{ChoiceQst_OPC},
+			</if>
+			<if test="ChoiceQst_OPD!=null">
+				 ChoiceQst_OPD = #{ChoiceQst_OPD},
+			</if>
+			
+			<if test="ChoiceQst_answ!=null">
+				 ChoiceQst_answ = #{ChoiceQst_answ}
+			</if>
+		</set>
+		where  ChoiceQst_id=#{ ChoiceQst_id}
+	</update>
+
+	<delete id="delete" parameterType="String">
+		delete from
+		choiceqst 
+		where  ChoiceQst_id=#{topic_id}
+	</delete>	
+</mapper>

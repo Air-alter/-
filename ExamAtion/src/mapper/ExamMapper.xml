@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="dao.IExamDAO">
+	<!--当数据库中字段名与实体类中属性名不一致时，需要显示定义字段映射  -->
+	<resultMap id="examResultMap" type="vo.Exam">
+		<id property="exam_id" column="exam_id" />
+		<result property="exam_Topic" column="exam_Topic" />
+		<result property="exam_Score" column="exam_Score" />
+		<result property="exam_Time" column="exam_Time" />
+		<result property="exam_duration" column="exam_duration" />
+	</resultMap>
+
+	<sql id="examColumns"> 
+		exam_id,exam_Topic,exam_Score,exam_Time,exam_duration
+	</sql>
+
+	<select id="getByExam_id" parameterType="String" resultMap="examResultMap">
+		select
+		<include refid="examColumns"></include>
+		from exam
+		where exam_id=#{exam_id}
+	</select>
+	
+	<insert id="insert" parameterType="vo.Exam">
+		insert into exam(<include refid="examColumns"></include>)
+		values(#{exam_id},#{exam_Topic},#{exam_Score},#{exam_Time},#{exam_duration})
+	</insert>
+	
+</mapper>
